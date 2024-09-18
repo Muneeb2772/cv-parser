@@ -26,17 +26,33 @@ def extract_text_from_docx(file_path):
         return ""
 
 def extract_info(text):
-    excluded_keywords = r'Address|Phone|Location|Email|Contact|Passport|Nationality|Visa|Driving|LinkedIn|Facebook'
-    name_pattern = r'([A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+){0,2})'
+    # Patterns for matching names and emails
+    name_pattern = r'\b(?:[A-Z][a-z]+(?:\s[A-Z][a-z]+){1,2})\b'
     email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-    limited_text = text[:500]
-    name_match = re.search(name_pattern, limited_text, re.MULTILINE)
-    emails = re.findall(email_pattern, limited_text)
-    name = name_match.group(1).strip() if name_match else 'N/A'
-    if re.search(excluded_keywords, name, re.IGNORECASE):
-        name = 'N/A'
+    
+    # Look for 'Name:' field explicitly
+    name_field_pattern = r'Name:\s*([A-Z][a-zA-Z\s]+)'
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    
+    # Extracting email addresses
+    emails = re.findall(email_pattern, text)
+    
+    # Check for explicit 'Name:' field
+    name_field_match = re.search(name_field_pattern, text)
+    if name_field_match:
+        name = name_field_match.group(1).strip()
+    else:
+        # If not found, use general name extraction
+        limited_text = text[:500]
+        name_matches = re.findall(name_pattern, limited_text)
+        filtered_names = [name for name in name_matches if not re.search(excluded_keywords, name, re.IGNORECASE)]
+        name = filtered_names[0].strip() if filtered_names else 'N/A'
+    
+    # Format the email addresses
     email = ', '.join(emails) if emails else 'N/A'
+    
     return {'Name': name, 'Email': email}
+
 
 def parse_resumes(folder_path):
     resumes = []
