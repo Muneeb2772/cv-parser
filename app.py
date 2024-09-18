@@ -103,6 +103,3 @@ def export_csv():
         attachment_filename='parsed_resumes.csv',
         as_attachment=True
     )
-
-if __name__ == '__main__':
-    app.run(debug=True)
