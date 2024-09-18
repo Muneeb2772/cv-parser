@@ -7,11 +7,12 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <div class="container mt-5">
-        <h1 class="text-center">Parsed Resume Results</h1>
-        <div class="table-responsive mt-4">
-            <table class="table table-striped table-bordered">
+        <h1 class="text-center mb-4">Resume Parsing Results</h1>
+        
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th>Filename</th>
@@ -30,14 +31,19 @@
                 </tbody>
             </table>
         </div>
+
         <div class="text-center mt-4">
-            <a href="{{ url_for('index') }}" class="btn btn-primary">Upload More Resumes</a>
-            <a href="{{ url_for('download_csv') }}" class="btn btn-success">Download Parsed CSV</a>
+            <a href="{{ url_for('export_csv') }}" class="btn btn-primary">Export as CSV</a>
+        </div>
+        
+        <div class="text-center mt-2">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Upload More Resumes</a>
         </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
