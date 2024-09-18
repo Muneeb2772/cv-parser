@@ -98,6 +98,3 @@ def download_csv():
         return send_file('output/parsed_resumes.csv', as_attachment=True)
     except Exception as e:
         return str(e)
-
-if __name__ == '__main__':
-    app.run(debug=True)
